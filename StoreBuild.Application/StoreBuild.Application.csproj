@@ -4,4 +4,12 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="InterFaces" />
+      <Folder Include="Security" />
+      <Folder Include="Senders" />
+      <Folder Include="Services" />
+      <Folder Include="ViewModels" />
+    </ItemGroup>
+
 </Project>
