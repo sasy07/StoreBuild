@@ -1,0 +1,2 @@
+AddMigration    :   dotnet ef migrations add InitUserTable -s ../StoreBuild.Web
+UpdateDataBase	:	dotnet ef database update -s ../StoreBuild.Web

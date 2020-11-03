@@ -5,15 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StoreBuild.Infra.Data;
+using StoreBuild.Infra.IoC;
 
 namespace StoreBuild.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration)  
         {
             Configuration = configuration;
         }
@@ -24,6 +27,11 @@ namespace StoreBuild.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<StoreBuildDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("StoreBuildDbConnection"));
+            });
+            RegisterService(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +61,11 @@ namespace StoreBuild.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public static void RegisterService(IServiceCollection service)
+        {
+            StoreBuildDependency.RegisterService(service);
         }
     }
 }
